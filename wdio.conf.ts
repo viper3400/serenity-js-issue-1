@@ -37,11 +37,9 @@ export const config: WebdriverIOConfig = {
     },
 
     headless: true,
-    automationProtocol: 'devtools',
+    automationProtocol: 'webdriver',
     outputDir: 'target/logs',
-    services: [
-        [ 'chromedriver', { } ]
-    ],
+    services: [ ['chromedriver', { } ]],
 
     // ==================
     // Specify Test Files
@@ -58,7 +56,7 @@ export const config: WebdriverIOConfig = {
     // then the current working directory is where your `package.json` resides, so `wdio`
     // will be called from there.
     specs: [
-        './spec/**/*.spec.ts',
+        './spec/**/repro.spec.ts',
     ],
     // Patterns to exclude.
     exclude: [
@@ -99,17 +97,20 @@ export const config: WebdriverIOConfig = {
         // it is possible to configure which logTypes to include/exclude.
         // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
         // excludeDriverLogs: ['bugreport', 'server'],
-
+        
         'goog:chromeOptions': {
+            excludeSwitches: [ 'enable-automation' ],
+            prefs: { 'credentials_enable_service': false,
+                'profile.password_manager_enabled': false },
             args: [
                 '--disable-web-security',
                 '--allow-file-access-from-files',
                 '--allow-file-access',
                 '--disable-infobars',
                 '--ignore-certificate-errors',
-                '--headless',
                 '--disable-gpu',
-                '--window-size=1024x768',
+                '--window-size=1920,1080',
+                           
             ]
         }
     }],
